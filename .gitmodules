@@ -1,0 +1,6 @@
+[submodule "zm"]
+	path = zm
+	url = https://github.com/zoneminder-containers/zoneminder-base.git
+[submodule "zmes"]
+	path = zmes
+	url = https://github.com/zoneminder-containers/eventserver-base.git
