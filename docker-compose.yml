@@ -21,8 +21,38 @@ services:
         build:
             context: ./zm
             args:
-            ZM_VERSION: 1.36.4
-            ES_VERSION: v6.1.25
+                ZM_VERSION: 1.36.4
+                # ES_VERSION: v6.1.25
+        ipc: service:shmem
+        restart: always
+        stop_grace_period: 45s
+        depends_on:
+            - zm-db
+        ports:
+            - 8082:80
+            - 8043:443
+            - 9010:9000
+        networks:
+            - zoneminder
+        volumes:
+            - zm_data:/data
+            - zm_config:/config
+            - zm_log:/log
+            # - type: tmpfs
+            # target: /dev/shm
+            # tmpfs:
+            #     size: 1000000000
+        env_file:
+            - ./.env
+
+    zoneminder-es:
+        container_name: zoneminder
+        hostname: zoneminder
+        build:
+            context: ./zmes
+            args:
+                ZM_VERSION: 1.36.4
+                ES_VERSION: v6.1.25
         ipc: service:shmem
         restart: always
         stop_grace_period: 45s

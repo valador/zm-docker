@@ -1,0 +1,11 @@
+--- zmes/Dockerfile	2021-07-10 08:26:21.403491532 +0000
++++ ./Dockerfile	2021-07-10 08:25:30.823838884 +0000
+@@ -39,7 +39,7 @@
+ # Apply changes to default ES config                                #
+ #                                                                   #
+ #####################################################################
+-FROM ghcr.io/zoneminder-containers/zoneminder-base:${ZM_VERSION}
++FROM slayerus/zoneminder:${ZM_VERSION}
+ ARG ES_VERSION
+ 
+ RUN set -x \

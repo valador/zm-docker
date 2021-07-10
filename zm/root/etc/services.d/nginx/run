@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bash
+. "/usr/local/bin/logger"
+# ==============================================================================
+# Nginx
+# Runs Nginx
+# ==============================================================================
+
+echo "Waiting for ZoneMinder to start" | info
+/bin/s6-svwait -U /var/run/s6/services/zoneminder
+
+echo "Starting Nginx..." | info
+
+exec nginx -g 'daemon off;'

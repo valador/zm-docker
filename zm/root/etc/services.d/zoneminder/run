@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bash
+. "/usr/local/bin/logger"
+# ==============================================================================
+# ZoneMinder
+# Runs ZoneMinder
+# ==============================================================================
+
+echo "Waiting for MariaDB to start" | info
+/bin/s6-svwait -U /var/run/s6/services/mariadb
+echo "Waiting for mariadb-configure to complete..." | info
+/bin/s6-svwait -U /var/run/s6/services/mariadb-configure
+
+echo "Starting ZoneMinder..." | info
+s6-setuidgid www-data /usr/bin/zmpkg.pl start
+
+# zmpkg.pl is blocking so no need to wait
+echo "ZoneMinder is up! Proceeding to monitoring." | info
+# Notify s6 service is up
+fdmove 1 3 printf "done\n"
+
+# Need to sleep to act like service is running
+# Terminate container if zm dies
+until [ "$(pgrep -fc /usr/bin/zm)" -lt "1" ]; do
+  sleep 1
+done
+echo "ZoneMinder has crashed! Exiting..." | error
+# This is required or the container stop hangs
+s6-svscanctl -t /var/run/s6/services
