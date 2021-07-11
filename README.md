@@ -30,3 +30,4 @@ diff -Naur zmes/Dockerfile ./Dockerfile > ./patches/zmes/Dockerfile.diff
 DEP's:
 gomplate
 python:3.8.11-alpine3.14
+python_version=3.8

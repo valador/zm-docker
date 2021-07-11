@@ -10,10 +10,15 @@ patch-zm:
 patch-zmes:
 	patch -uN ./zmes/Dockerfile ./patches/zmes/Dockerfile.diff || return 1
 
-.PHONY: build-zm build-zmes
-build-zm:
+.PHONY: build-zm build-zmes build-mlbase build-mlbase-cpu
+build-zm: patch-zm
 	docker build -t slayerus/zoneminder:1.36 --build-arg ZM_VERSION=1.36 ./zm/.
 	docker push slayerus/zoneminder:1.36
 build-zmes: patch-zmes
 	docker build -t slayerus/zoneminder-es:1.36 --build-arg ZM_VERSION=1.36 --build-arg ES_VERSION=v6.1.25 ./zmes/.
 	docker push slayerus/zoneminder-es:1.36
+build-mlbase:
+	make -C ./mlbase
+build-mlbase-cpu: build-mlbase
+	docker build -t slayerus/mlbase:cpu --build-arg python_version=3.8 --build-arg opencv_version=4.5.3 --build-arg dlib_version=v19.22 ./mlbase/dist/cpu/.
+	docker push slayerus/mlbase:cpu
