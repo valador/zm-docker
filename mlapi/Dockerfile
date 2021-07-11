@@ -60,7 +60,7 @@ COPY mlapiconfig.ini ${MLAPI_DIR}/mlapiconfig.ini.in
 COPY ./init_user.py ${MLAPI_DIR}/
 COPY ./entrypoint.sh /entrypoint.sh
 
-VOLUME [ "${MLAPI_DIR}/images", "${MLAPI_DIR}/known_faces", "${MLAPI_DIR}/unknown_faces", "${MLAPI_DIR}/db" ]
+#VOLUME [ "${MLAPI_DIR}/images", "${MLAPI_DIR}/known_faces", "${MLAPI_DIR}/unknown_faces", "${MLAPI_DIR}/db" ]
 EXPOSE 5000
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "python3", "./mlapi.py", "-c", "./mlapiconfig.ini" ]

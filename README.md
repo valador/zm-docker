@@ -31,3 +31,6 @@ DEP's:
 gomplate
 python:3.8.11-alpine3.14
 python_version=3.8
+
+заметки:
+mlbase и zm разных операционок, сделать все на основе бубунты...?
