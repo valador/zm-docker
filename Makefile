@@ -6,7 +6,7 @@ help:
 
 .PHONY: patch-zm patch-zmes
 patch-zm:
-	patch -uN filename.ext ../filename-patchname.diff || return 1
+	patch -uN ./zm/Dockerfile ./patches/zm/Dockerfile.diff || return 1
 patch-zmes:
 	patch -uN ./zmes/Dockerfile ./patches/zmes/Dockerfile.diff || return 1
 

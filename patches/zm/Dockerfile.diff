@@ -1,0 +1,11 @@
+--- zm/Dockerfile	2021-07-10 08:40:40.570727687 +0000
++++ ./Dockerfile	2021-07-11 08:05:16.735860379 +0000
+@@ -8,7 +8,7 @@
+ # Parse control file for all runtime and build dependencies         #
+ #                                                                   #
+ #####################################################################
+-FROM python:alpine as zm-source
++FROM python:3.8.11-alpine3.14 as zm-source
+ ARG ZM_VERSION
+ WORKDIR /zmsource
+ 

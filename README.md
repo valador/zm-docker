@@ -26,3 +26,7 @@ patch -uNp1 -i ../${pkgname}-patchname.diff || return 1
 ```
 diff -Naur zmes/Dockerfile ./Dockerfile > ./patches/zmes/Dockerfile.diff
 ```
+
+DEP's:
+gomplate
+python:3.8.11-alpine3.14
