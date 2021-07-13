@@ -6,16 +6,16 @@ help:
 
 .PHONY: patch-zm patch-zmes
 patch-zm:
-	patch -uN ./zm/Dockerfile ./patches/zm/Dockerfile.diff || return 1
+	patch -uN ./zm/Dockerfile ./patches/zm/Dockerfile-mlbase.diff || return 0 || return 1
 patch-zmes:
-	patch -uN ./zmes/Dockerfile ./patches/zmes/Dockerfile.diff || return 1
+	patch -uN ./zmes/Dockerfile ./patches/zmes/Dockerfile-mlapi.diff || return 1
 
 .PHONY: build-zm build-zmes build-mlbase build-mlbase-cpu
 build-zm: patch-zm
-	docker build -t slayerus/zoneminder:1.36 --build-arg ZM_VERSION=1.36 ./zm/.
+	DOCKER_BUILDKIT=1 docker build -t slayerus/zoneminder:1.36 --build-arg ZM_VERSION=1.36.5 --build-arg mlbase_version=cpu ./zm/.
 	docker push slayerus/zoneminder:1.36
 build-zmes: patch-zmes
-	docker build -t slayerus/zoneminder-es:1.36 --build-arg ZM_VERSION=1.36 --build-arg ES_VERSION=v6.1.25 ./zmes/.
+	DOCKER_BUILDKIT=1 docker build -t slayerus/zoneminder-es:1.36 --build-arg ZM_VERSION=1.36 --build-arg ES_VERSION=v6.1.25 ./zmes/.
 	docker push slayerus/zoneminder-es:1.36
 build-mlbase:
 	make -C ./mlbase

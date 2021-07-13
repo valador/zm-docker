@@ -1,0 +1,25 @@
+--- ./Dockerfile	2021-07-13 17:45:00.022088082 +0000
++++ ./zmes/Dockerfile	2021-07-13 17:45:30.410547188 +0000
+@@ -39,7 +39,7 @@
+ # Apply changes to default ES config                                #
+ #                                                                   #
+ #####################################################################
+-FROM ghcr.io/zoneminder-containers/zoneminder-base:${ZM_VERSION}
++FROM slayerus/zoneminder:${ZM_VERSION}
+ ARG ES_VERSION
+ 
+ RUN set -x \
+@@ -65,11 +65,11 @@
+         MAKE_CONFIG_BACKUP='' \
+         ./install.sh \
+             --install-es \
+-            --no-install-hook \
++            --install-hook \
+             --install-config \
+             --no-interactive \
+             --no-pysudo \
+-            --no-hook-config-upgrade \
++            --no-download-models \
+     && mkdir -p /zoneminder/estools \
+     && cp ./tools/* /zoneminder/estools
+ 

@@ -8,7 +8,7 @@ ARG S6_ARCH=amd64
 # Parse control file for all runtime and build dependencies         #
 #                                                                   #
 #####################################################################
-FROM python:3.8.11-alpine3.14 as zm-source
+FROM python:alpine as zm-source
 ARG ZM_VERSION
 WORKDIR /zmsource
 

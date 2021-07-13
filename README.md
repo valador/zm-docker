@@ -35,3 +35,5 @@ python_version=3.8
 заметки:
 zm dockerfile - дебиан на убунту
 но в mlbase templates cudnn сборка, нужно подменить на свою сборку с mlbase
+
+тормозит на библиотеках ffmpeg, чего то не хаватает...

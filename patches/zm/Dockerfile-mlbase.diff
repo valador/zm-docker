@@ -1,0 +1,41 @@
+--- ./Dockerfile	2021-07-13 18:09:32.438986589 +0000
++++ ./zm/Dockerfile	2021-07-13 18:14:37.836580511 +0000
+@@ -1,6 +1,7 @@
+ # syntax=docker/dockerfile:experimental
+ ARG ZM_VERSION=master
+ ARG S6_ARCH=amd64
++ARG mlbase_version=cpu
+ 
+ #####################################################################
+ #                                                                   #
+@@ -72,7 +73,7 @@
+ # Prepare base-image with core programs + repository                #
+ #                                                                   #
+ #####################################################################
+-FROM debian:buster as base-image-core
++FROM slayerus/mlbase:${mlbase_version} as base-image-core
+ 
+ # Skip interactive post-install scripts
+ ENV DEBIAN_FRONTEND=noninteractive
+@@ -98,7 +99,7 @@
+ RUN set -x \
+     && apt-get update \
+     && apt-get install -y \
+-        devscripts
++        devscripts equivs
+ 
+ # Create runtime package
+ RUN --mount=type=bind,target=/tmp/control,source=/zmsource/zoneminder_control,from=zm-source,rw \
+@@ -193,8 +194,10 @@
+ 
+ # Add Nginx Repo
+ RUN set -x \
+-    && echo "deb https://nginx.org/packages/mainline/debian/ buster nginx" > /etc/apt/sources.list.d/nginx.list \
+-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
++    && wget https://nginx.org/keys/nginx_signing.key \
++    && apt-key add nginx_signing.key \
++    && echo "deb https://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list \
++    && echo "deb-src https://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list
+ 
+ # Install additional services required by ZM ("Recommends")
+ # PHP-fpm not required for apache
