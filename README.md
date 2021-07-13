@@ -37,3 +37,5 @@ zm dockerfile - дебиан на убунту
 но в mlbase templates cudnn сборка, нужно подменить на свою сборку с mlbase
 
 тормозит на библиотеках ffmpeg, чего то не хаватает...
+
+https://magazine.odroid.com/article/zoneminder-part-2-building-the-package-from-source-on-the-odroid-xu4/
